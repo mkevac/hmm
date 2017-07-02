@@ -17,7 +17,6 @@ import (
 )
 
 var opts struct {
-	File string `short:"f" long:"file" description:"Use this file instead of stdin"`
 	Http string `long:"http" description:"Address on which to listen to" default:"localhost:0"`
 }
 
@@ -44,18 +43,7 @@ func serveWs(w http.ResponseWriter, r *http.Request, input chan string) {
 func main() {
 	flags.Parse(&opts)
 
-	var r *bufio.Reader
-
-	if opts.File != "" {
-		f, err := os.Open(opts.File)
-		if err != nil {
-			log.Fatalf("Error while opening '%s': %s", opts.File, err)
-		}
-		defer f.Close()
-		r = bufio.NewReader(f)
-	} else {
-		r = bufio.NewReader(os.Stdin)
-	}
+	var r = bufio.NewReader(os.Stdin)
 
 	output := make(chan string, 1024)
 
