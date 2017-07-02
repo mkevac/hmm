@@ -29,3 +29,11 @@ cat <(echo "Time 1min 5min 15min"; while true; do echo -n $(date +%H:%M:%S); ech
 It will look like this:
 
 ![hmm gif](hmm.gif)
+
+# Installation
+
+Similar to most of the go packages, just use go get:
+
+```
+go get -u githib.com/mkevac/hmm
+```
