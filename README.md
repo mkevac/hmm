@@ -23,7 +23,7 @@ Time 1min 5min 15min
 Cool. We can use hmm to see this numbers as a chart by sending same data to hmm's stdin:
 
 ```
-cat <(echo "Time 1min 5min 15min"; while true; do echo -n $(date +%H:%M:%S); echo -n " "; uptime | cut -d " " -f 9-11; sleep 1; done;) | hmm
+(echo "Time 1min 5min 15min"; while true; do echo -n $(date +%H:%M:%S); echo -n " "; uptime | cut -d " " -f 9-11; sleep 1; done;) | hmm
 ```
 
 It will look like this:
@@ -36,4 +36,17 @@ Similar to most of the go packages, just use go get:
 
 ```
 go get -u githib.com/mkevac/hmm
+```
+
+# Data format
+
+hmm espects that in each input line it gets first column will be value for x axis (usually time or datetime) and all other columns will have values for y axis. One for each line. E.g.
+```
+10:11:12 10 15 34.2
+10:11:13 11 11 36.2
+```
+
+First line of input is special. It is used to name lines. E.g.
+```
+Time Line1 Line2 BestLine
 ```
