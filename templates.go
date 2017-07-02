@@ -73,7 +73,7 @@ $(function () {
 
             for (i = 1; i < splitted.length; i++) {
                 xses.push([splitted[0]]);
-                yses.push([parseInt(splitted[i])]);
+                yses.push([parseFloat(splitted[i])]);
                 numbers.push(i - 1);
             }
 
