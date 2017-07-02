@@ -3,7 +3,7 @@ hmm is a tool for instant charting your data
 
 # Why?
 
-Imagine you have a script that gives you some numbers. Benchmark script that gives you an amount of requests per seconds, for example. It would be great to see these numbers on a chart! hmm can help you with this. You can send an output for your script to hmm's stdin and hmm will open your browser and show this numbers to you as a beautiful updating chart.
+Imagine you have a script that gives you some numbers. Benchmark script that gives you an amount of requests per seconds, for example. It would be great to see these numbers on a chart! hmm can help you with this. You can send an output for your script to hmm's stdin and hmm will open your browser and show these numbers to you as a beautiful atimatically updating chart.
 
 # Example
 
