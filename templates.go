@@ -28,6 +28,7 @@ var indexHtmlTemplateString = `
 var mainJsTemplateString = `
 var chart1;
 var expect_headers = !{{ .NoHeader }};
+var last = {{.LastSeconds}};
 
 $(function () {
 
@@ -82,7 +83,7 @@ $(function () {
                 numbers.push(i - 1);
             }
 
-            Plotly.extendTraces('container1', {x: xses, y: yses}, numbers, 86400);
+            Plotly.extendTraces('container1', {x: xses, y: yses}, numbers, last);
         }
     };
 });

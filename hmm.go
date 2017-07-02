@@ -11,15 +11,19 @@ import (
 	"fmt"
 	"net"
 
+	"time"
+
 	"github.com/gorilla/websocket"
 	"github.com/jessevdk/go-flags"
 	"github.com/mkevac/hmm/internal/browser"
 )
 
 var opts struct {
-	Http     string `long:"http" description:"Address on which to listen to" default:"localhost:0"`
-	NoHeader bool   `short:"n" long:"noheader" description:"Do not expect header in the first line"`
-	Verbose  bool   `short:"v" long:"verbose" description:"Increase verbosity"`
+	Http        string `long:"http" description:"Address on which to listen to" default:"localhost:0"`
+	NoHeader    bool   `short:"n" long:"noheader" description:"Do not expect header in the first line"`
+	Verbose     bool   `short:"v" long:"verbose" description:"Increase verbosity"`
+	Last        string `short:"l" long:"last" description:"Which period to show" default:"24h"`
+	LastSeconds float64
 }
 
 var upgrader = websocket.Upgrader{
@@ -43,7 +47,9 @@ func serveWs(w http.ResponseWriter, r *http.Request, input chan string) {
 }
 
 func main() {
-	_, err := flags.Parse(&opts)
+	var err error
+
+	_, err = flags.Parse(&opts)
 	if err != nil {
 		if flagsErr, ok := err.(*flags.Error); ok && flagsErr.Type == flags.ErrHelp {
 			os.Exit(0)
@@ -51,6 +57,13 @@ func main() {
 			os.Exit(1)
 		}
 	}
+
+	lastDuration, err := time.ParseDuration(opts.Last)
+	if err != nil {
+		log.Fatalf("Error while parsing duration %v", opts.Last)
+	}
+
+	opts.LastSeconds = lastDuration.Seconds()
 
 	var r = bufio.NewReader(os.Stdin)
 
