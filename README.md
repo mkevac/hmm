@@ -36,7 +36,7 @@ You can event get data from remote server with ssh:
 ssh server '(echo "Time 1min 5min 15min"; while true; do echo -n $(date +%H:%M:%S); echo -n " "; uptime | cut -d " " -f 9-11; sleep 1; done;)' | hmm
 ```
 
-P.S. These commands work on MacOS. For Linux use
+*P.S. These commands work on MacOS. For Linux use*
 ```
 echo "Time 1min 5min 15min"; while true; do echo -n $(date +%H:%M:%S); echo -n " "; cat /proc/loadavg | cut -d " " -f 1-3; sleep 1; done;
 ```
