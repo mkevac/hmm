@@ -1,4 +1,4 @@
-# hmm
+# hmm [![Build Status](https://travis-ci.org/mkevac/hmm.svg?branch=master)](https://travis-ci.org/mkevac/hmm)
 hmm is a tool for instant charting your data
 
 # Why?
