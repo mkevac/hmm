@@ -43,7 +43,7 @@ $(function () {
 
             var data = JSON.parse(evt.data);
             console.log(data);
-            var splitted = data.split('\t');
+            var splitted = data.split(/\s*[\s,]\s*/);
 
             if (headers.length == 0) {
                 headers = splitted;
