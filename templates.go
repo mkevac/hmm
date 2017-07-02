@@ -15,7 +15,6 @@ var indexHtmlTemplateString = `
     <title></title>
     <meta charset="utf-8" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
@@ -28,7 +27,7 @@ var indexHtmlTemplateString = `
 
 var mainJsTemplateString = `
 var chart1;
-var headers = [];
+var expect_headers = !{{ .NoHeader }};
 
 $(function () {
 
@@ -45,27 +44,33 @@ $(function () {
             console.log(data);
             var splitted = data.split(/\s*[\s,]\s*/);
 
-            if (headers.length == 0) {
-                headers = splitted;
+            if (!chart1) {
+
+                var chartLayout = {
+					autosize: true,
+					yaxis: {
+						tickformat: ".5s"
+					}
+				};
 
                 var chartData = [];
-                var chartLayout = {
-                    autosize: true,
-                    yaxis: {
-                        tickformat: ".5s"
-                    }
-                };
 
-                for (i = 1; i < headers.length; i++) {
-                    chartData.push({x: [], y: [], type: "scatter", name: headers[i]})
+				if (expect_headers) {
+					for (i = 1; i < splitted.length; i++) {
+						chartData.push({x: [], y: [], type: "scatter", name: splitted[i]});
+					}
+                } else {
+				    for (i = 1; i < splitted.length; i++) {
+						chartData.push({x: [], y: [], type: "scatter"});
+					}
                 }
 
                 chart1 = Plotly.newPlot('container1', chartData, chartLayout);
 
-                return;
+                if (expect_headers) {
+                    return;
+                }
             }
-
-            //var d = moment(splitted[0]).format('HH:mm:ss');
 
             var xses = [];
             var yses = [];

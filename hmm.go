@@ -17,7 +17,9 @@ import (
 )
 
 var opts struct {
-	Http string `long:"http" description:"Address on which to listen to" default:"localhost:0"`
+	Http     string `long:"http" description:"Address on which to listen to" default:"localhost:0"`
+	NoHeader bool   `short:"n" long:"noheader" description:"Do not expect header in the first line"`
+	Verbose  bool   `short:"v" long:"verbose" description:"Increase verbosity"`
 }
 
 var upgrader = websocket.Upgrader{
@@ -41,7 +43,14 @@ func serveWs(w http.ResponseWriter, r *http.Request, input chan string) {
 }
 
 func main() {
-	flags.Parse(&opts)
+	_, err := flags.Parse(&opts)
+	if err != nil {
+		if flagsErr, ok := err.(*flags.Error); ok && flagsErr.Type == flags.ErrHelp {
+			os.Exit(0)
+		} else {
+			os.Exit(1)
+		}
+	}
 
 	var r = bufio.NewReader(os.Stdin)
 
@@ -53,7 +62,7 @@ func main() {
 		}
 	})
 	http.HandleFunc("/main.js", func(w http.ResponseWriter, r *http.Request) {
-		if err := mainJsTemplate.Execute(w, nil); err != nil {
+		if err := mainJsTemplate.Execute(w, &opts); err != nil {
 			log.Print("Error while executing main.js template")
 		}
 	})
@@ -81,7 +90,9 @@ func main() {
 	s := bufio.NewScanner(r)
 	for s.Scan() {
 		text := s.Text()
-		fmt.Println(text)
+		if opts.Verbose {
+			fmt.Println(text)
+		}
 		output <- text
 	}
 	if err := s.Err(); err != nil {
