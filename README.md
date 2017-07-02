@@ -30,6 +30,15 @@ It will look like this:
 
 ![hmm gif](hmm.gif)
 
+P.S. These commands work on MacOS. For Linux use
+```
+echo "Time 1min 5min 15min"; while true; do echo -n $(date +%H:%M:%S); echo -n " "; cat /proc/loadavg | cut -d " " -f 1-3; sleep 1; done;
+```
+and
+```
+(echo "Time 1min 5min 15min"; while true; do echo -n $(date +%H:%M:%S); echo -n " "; cat /proc/loadavg | cut -d " " -f 1-3; sleep 1; done;) | hmm
+```
+
 # Installation
 
 Similar to most of the go packages, just use go get:
