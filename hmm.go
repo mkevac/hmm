@@ -87,4 +87,6 @@ func main() {
 	if err := s.Err(); err != nil {
 		log.Fatalf("Error while scanning file: %s", err)
 	}
+
+	select {}
 }
