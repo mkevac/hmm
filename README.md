@@ -38,6 +38,23 @@ Similar to most of the go packages, just use go get:
 go get -u githib.com/mkevac/hmm
 ```
 
+# Usage
+
+```
+$ hmm -h
+Usage:
+  hmm [OPTIONS]
+
+Application Options:
+      --http=     Address on which to listen to (default: localhost:0)
+  -n, --noheader  Do not expect header in the first line
+  -v, --verbose   Increase verbosity
+  -l, --last=     Which period to show (default: 24h)
+
+Help Options:
+  -h, --help      Show this help message
+```
+
 # Data format
 
 hmm espects that in each input line it gets first column will be value for x axis (usually time or datetime) and all other columns will have values for y axis. One for each line. E.g.
@@ -46,7 +63,9 @@ hmm espects that in each input line it gets first column will be value for x axi
 10:11:13 11 11 36.2
 ```
 
-First line of input is special. It is used to name lines. E.g.
+First line of input is special. It is called header and it's used to name lines. E.g.
 ```
 Time Line1 Line2 BestLine
 ```
+
+If you don't have such first line, use -n option.
