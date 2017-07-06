@@ -51,7 +51,9 @@ ssh server '(echo "Time 1min 5min 15min"; while true; do echo -n $(date +%H:%M:%
 
 # Installation
 
-Similar to most of the go packages, just use go get:
+You can find binaries [here](https://github.com/mkevac/hmm/releases).
+
+Or, similar to most of the go packages, just use go get:
 
 ```
 go get -u githib.com/mkevac/hmm
