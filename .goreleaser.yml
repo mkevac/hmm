@@ -2,6 +2,7 @@
 # Build customization
 builds:
   - binary: hmm
+    format: binary
     goos:
       - windows
       - darwin
