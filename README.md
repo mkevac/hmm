@@ -62,27 +62,31 @@ go get -u githib.com/mkevac/hmm
 # Usage
 
 ```
-$ hmm -h
+$ hmm -h            
 Usage:
   hmm [OPTIONS]
 
 Application Options:
-      --http=     Address on which to listen to (default: localhost:0)
-  -n, --noheader  Do not expect header in the first line
-  -v, --verbose   Increase verbosity
-  -l, --last=     Which period to show (default: 24h)
+      --http=        Address on which to listen to (default: localhost:0)
+  -n, --noheader     Do not expect header in the first line
+  -t, --notimestamp  Do not expect timestamp in the first column
+  -v, --verbose      Increase verbosity
+  -l, --last=        Which period to show (default: 24h)
 
 Help Options:
-  -h, --help      Show this help message
+  -h, --help         Show this help message
+
 ```
 
 # Data format
 
-hmm espects that in each input line it gets first column will be value for x axis (usually time or datetime) and all other columns will have values for y axis. One for each line. E.g.
+hmm expects that in each input line it gets first column will be value for x axis (usually time or datetime) and all other columns will have values for y axis. One for each line. E.g.
 ```
 10:11:12 10 15 34.2
 10:11:13 11 11 36.2
 ```
+
+But in case you want to send only values for y, you can use -t option and hmm will use current timestamp as a x value.
 
 First line of input is special. It is called header and it's used to name lines. E.g.
 ```

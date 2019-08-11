@@ -21,6 +21,7 @@ import (
 var opts struct {
 	Http        string `long:"http" description:"Address on which to listen to" default:"localhost:0"`
 	NoHeader    bool   `short:"n" long:"noheader" description:"Do not expect header in the first line"`
+	NoTimestamp bool   `short:"t" long:"notimestamp" description:"Do not expect timestamp in the first column"`
 	Verbose     bool   `short:"v" long:"verbose" description:"Increase verbosity"`
 	Last        string `short:"l" long:"last" description:"Which period to show" default:"24h"`
 	LastSeconds float64
@@ -103,6 +104,12 @@ func main() {
 	s := bufio.NewScanner(r)
 	for s.Scan() {
 		text := s.Text()
+
+		if opts.NoTimestamp {
+			now := time.Now().Format("15:04:05")
+			text = now + " " + text
+		}
+
 		if opts.Verbose {
 			fmt.Println(text)
 		}
